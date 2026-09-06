@@ -43,7 +43,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #08090d;
+            background: url('https://i.ibb.co/ks6gKYwh/IMG-0663.jpg') no-repeat center center/cover;
             filter: blur(8px) brightness(0.6);
             transform: scale(1.05);
             z-index: 0;
@@ -126,7 +126,7 @@
             text-align: center;
         }
 
-        /* AVATAR PLACEHOLDER */
+        /* AVATAR */
         .avatar-container {
             position: relative;
             width: 110px;
@@ -134,24 +134,18 @@
             margin: 0 auto 16px;
         }
 
-        .avatar-placeholder {
+        .avatar-img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
+            object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease;
-            background-color: #1a1c23;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 36px;
         }
 
-        .avatar-container:hover .avatar-placeholder {
+        .avatar-container:hover .avatar-img {
             transform: scale(1.05) rotate(3deg);
-            color: #ffffff;
         }
 
         .username {
@@ -191,7 +185,7 @@
             margin-bottom: 20px;
         }
 
-        /* GALLERY PLACEHOLDER */
+        /* GALLERY HÌNH ÁNH */
         .gallery-section {
             margin-bottom: 24px;
             text-align: left;
@@ -222,22 +216,21 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            background-color: #1a1c23;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 20px;
-            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .gallery-item:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
         }
 
-        /* LINK BUTTONS */
+        .gallery-item:hover img {
+            transform: scale(1.15);
+        }
+
+        /* LINK SOCIALS */
         .links-list {
             display: flex;
             flex-direction: column;
@@ -254,9 +247,9 @@
             padding: 12px 18px;
             border-radius: 14px;
             color: #ffffff;
+            text-decoration: none;
             font-weight: 600;
             font-size: 14px;
-            cursor: pointer;
             transition: all 0.25s ease;
         }
 
@@ -322,9 +315,9 @@
         <div class="profile-card" id="card">
             
             <div class="avatar-container">
-                <div class="avatar-placeholder">
-                    <i class="fa-solid fa-user"></i>
-                </div>
+                <a href="https://ibb.co/9k39nR1q" target="_blank">
+                    <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="Avatar" class="avatar-img">
+                </a>
             </div>
 
             <h1 class="username">hwxnvc</h1>
@@ -344,42 +337,42 @@
                     <span>My Gallery</span>
                 </div>
                 <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <i class="fa-regular fa-image"></i>
-                    </div>
-                    <div class="gallery-item">
-                        <i class="fa-regular fa-image"></i>
-                    </div>
-                    <div class="gallery-item">
-                        <i class="fa-regular fa-image"></i>
-                    </div>
+                    <a href="https://ibb.co/9k39nR1q" target="_blank" class="gallery-item">
+                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="Photo 1">
+                    </a>
+                    <a href="https://ibb.co/9k39nR1q" target="_blank" class="gallery-item">
+                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="Photo 2">
+                    </a>
+                    <a href="https://ibb.co/9k39nR1q" target="_blank" class="gallery-item">
+                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="Photo 3">
+                    </a>
                 </div>
             </div>
 
             <div class="links-list">
-                <div class="custom-link-btn">
+                <a href="#" class="custom-link-btn">
                     <div class="link-left">
                         <i class="fa-brands fa-discord" style="color: #5865f2;"></i>
                         <span>Discord Community</span>
                     </div>
                     <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </div>
+                </a>
 
-                <div class="custom-link-btn">
+                <a href="#" class="custom-link-btn">
                     <div class="link-left">
                         <i class="fa-brands fa-instagram" style="color: #e1306c;"></i>
                         <span>Instagram Profile</span>
                     </div>
                     <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </div>
+                </a>
 
-                <div class="custom-link-btn">
+                <a href="#" class="custom-link-btn">
                     <div class="link-left">
                         <i class="fa-brands fa-github"></i>
                         <span>GitHub Projects</span>
                     </div>
                     <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </div>
+                </a>
             </div>
 
         </div>
