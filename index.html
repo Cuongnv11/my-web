@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - hwxnvc</title>
+    <title></title>
     
-    <!-- Font Awesome Icons & Google Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -70,10 +69,6 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             cursor: pointer;
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
         }
@@ -81,21 +76,6 @@
         #entry-screen.fade-out {
             opacity: 0;
             visibility: hidden;
-        }
-
-        .entry-text {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 5px;
-            text-transform: lowercase;
-            color: #ffffff;
-            animation: pulseGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { opacity: 0.4; transform: scale(0.96); }
-            100% { opacity: 1; transform: scale(1.03); text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
         }
 
         /* CONTAINER THẺ 3D */
@@ -131,7 +111,7 @@
             position: relative;
             width: 110px;
             height: 110px;
-            margin: 0 auto 16px;
+            margin: 0 auto 24px;
         }
 
         .avatar-img {
@@ -142,65 +122,16 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease;
+            display: block;
         }
 
         .avatar-container:hover .avatar-img {
             transform: scale(1.05) rotate(3deg);
         }
 
-        .username {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 6px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        .badges-row {
-            display: inline-flex;
-            gap: 10px;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 6px 14px;
-            border-radius: 20px;
-            margin-bottom: 16px;
-        }
-
-        .badge-icon {
-            color: #b5bac1;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-
-        .badge-icon:hover {
-            color: #ffffff;
-            transform: scale(1.2);
-        }
-
-        .bio-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            min-height: 22px;
-            margin-bottom: 20px;
-        }
-
         /* GALLERY HÌNH ÁNH */
         .gallery-section {
             margin-bottom: 24px;
-            text-align: left;
-        }
-
-        .gallery-title {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-secondary);
-            font-weight: 700;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .gallery-grid {
@@ -217,6 +148,7 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
+            display: block;
         }
 
         .gallery-item img {
@@ -224,32 +156,26 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s ease;
+            display: block;
         }
 
         .gallery-item:hover img {
             transform: scale(1.15);
         }
 
-        /* LINK SOCIALS */
+        /* LINK BARS */
         .links-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-bottom: 20px;
         }
 
         .custom-link-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: block;
+            height: 48px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 12px 18px;
             border-radius: 14px;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
             transition: all 0.25s ease;
         }
 
@@ -260,16 +186,6 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .link-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .link-left i {
-            font-size: 18px;
-        }
-
         .audio-widget {
             position: fixed;
             bottom: 24px;
@@ -277,22 +193,18 @@
             background: rgba(20, 22, 32, 0.85);
             border: 1px solid var(--card-border);
             backdrop-filter: blur(12px);
-            padding: 10px 16px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--text-secondary);
+            border-radius: 50%;
             z-index: 99;
             cursor: pointer;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             transition: all 0.2s ease;
+            width: 44px;
+            height: 44px;
         }
 
         .audio-widget:hover {
-            color: #fff;
             border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
         }
 
         @media (max-width: 480px) {
@@ -307,118 +219,48 @@
     <div class="bg-image"></div>
     <div class="bg-overlay"></div>
 
-    <div id="entry-screen">
-        <div class="entry-text">click to enter...</div>
-    </div>
+    <div id="entry-screen"></div>
 
     <div class="wrapper">
         <div class="profile-card" id="card">
             
             <div class="avatar-container">
                 <a href="https://ibb.co/9k39nR1q" target="_blank">
-                    <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="Avatar" class="avatar-img">
+                    <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="" class="avatar-img">
                 </a>
             </div>
 
-            <h1 class="username">hwxnvc</h1>
-
-            <div class="badges-row">
-                <i class="fa-solid fa-bolt badge-icon" title="Nitro"></i>
-                <i class="fa-solid fa-shield-halved badge-icon" title="Badge 2"></i>
-                <i class="fa-solid fa-code badge-icon" title="Developer"></i>
-                <i class="fa-solid fa-gem badge-icon" title="Booster"></i>
-            </div>
-
-            <div class="bio-text" id="typewriter"></div>
-
             <div class="gallery-section">
-                <div class="gallery-title">
-                    <i class="fa-regular fa-images"></i>
-                    <span>My Gallery</span>
-                </div>
                 <div class="gallery-grid">
                     <a href="https://ibb.co/9k39nR1q" target="_blank" class="gallery-item">
-                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="Photo 1">
+                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="">
                     </a>
                     <a href="https://ibb.co/9k39nR1q" target="_blank" class="gallery-item">
-                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="Photo 2">
+                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="">
                     </a>
                     <a href="https://ibb.co/9k39nR1q" target="_blank" class="gallery-item">
-                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="Photo 3">
+                        <img src="https://i.ibb.co/ks6gKYwh/IMG-0663.jpg" alt="">
                     </a>
                 </div>
             </div>
 
             <div class="links-list">
-                <a href="#" class="custom-link-btn">
-                    <div class="link-left">
-                        <i class="fa-brands fa-discord" style="color: #5865f2;"></i>
-                        <span>Discord Community</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </a>
-
-                <a href="#" class="custom-link-btn">
-                    <div class="link-left">
-                        <i class="fa-brands fa-instagram" style="color: #e1306c;"></i>
-                        <span>Instagram Profile</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </a>
-
-                <a href="#" class="custom-link-btn">
-                    <div class="link-left">
-                        <i class="fa-brands fa-github"></i>
-                        <span>GitHub Projects</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </a>
+                <a href="#" class="custom-link-btn"></a>
+                <a href="#" class="custom-link-btn"></a>
+                <a href="#" class="custom-link-btn"></a>
             </div>
 
         </div>
     </div>
 
-    <div class="audio-widget" id="audio-toggle">
-        <i class="fa-solid fa-music"></i>
-        <span id="audio-status">Audio Off</span>
-    </div>
+    <div class="audio-widget" id="audio-toggle"></div>
 
     <script>
         const entryScreen = document.getElementById('entry-screen');
-        const audioToggle = document.getElementById('audio-toggle');
-        const audioStatus = document.getElementById('audio-status');
 
         entryScreen.addEventListener('click', () => {
             entryScreen.classList.add('fade-out');
         });
-
-        const bioPhrases = ["designer & developer", "welcome to my profile", "guns.lol aesthetic layout"];
-        let phraseIdx = 0;
-        let charIdx = 0;
-        const typewriterEl = document.getElementById("typewriter");
-
-        function typeBio() {
-            if (charIdx < bioPhrases[phraseIdx].length) {
-                typewriterEl.textContent += bioPhrases[phraseIdx].charAt(charIdx);
-                charIdx++;
-                setTimeout(typeBio, 80);
-            } else {
-                setTimeout(eraseBio, 2000);
-            }
-        }
-
-        function eraseBio() {
-            if (charIdx > 0) {
-                typewriterEl.textContent = bioPhrases[phraseIdx].substring(0, charIdx - 1);
-                charIdx--;
-                setTimeout(eraseBio, 40);
-            } else {
-                phraseIdx = (phraseIdx + 1) % bioPhrases.length;
-                setTimeout(typeBio, 300);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => setTimeout(typeBio, 800));
 
         const card = document.getElementById('card');
         document.addEventListener('mousemove', (e) => {
