@@ -3,21 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hwxnvc | Personal Site</title>
+    <title>Hwxnvc | Personal Portal</title>
     
+    <!-- Link Font Awesome (Để lấy biểu tượng logo) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Link Google Fonts (Font Inter hiện đại, sạch sẽ) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CSS STYLES (Phần trang trí) --- */
+        /* --- CSS STYLES (Phong cách Neumorphism Sáng) --- */
         
         :root {
-            --primary-color: #7289da; /* Màu Discord */
-            --bg-color: #0d1117;     /* Màu nền tối kiểu GitHub */
-            --text-color: #c9d1d9;
-            --card-bg: rgba(255, 255, 255, 0.05); /* Nền kính mờ */
-            --border-color: rgba(255, 255, 255, 0.1);
+            /* Hệ màu Neumorphism Sáng */
+            --bg-color: #e0e5ec;
+            --card-bg: #e0e5ec;
+            --text-color: #37474f;
+            --text-muted: #78909c;
+            --shadow-dark: #bfc4ca;
+            --shadow-light: #ffffff;
+            
+            /* Màu nhấn các nền tảng */
+            --discord-color: #7289da;
+            --bluesky-color: #0085ff;
+            --github-color: #24292f;
+            
+            /* Tỷ lệ và kích thước */
+            --border-radius: 30px;
+            --btn-radius: 15px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -34,54 +48,66 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
-            overflow: hidden; /* Giữ vòng tròn trang trí */
+            padding: 40px;
+            overflow: hidden;
+            position: relative;
         }
 
         /* --- Vòng tròn trang trí nền --- */
         .circle {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
+            background: linear-gradient(145deg, #f0f3f8, #c9ced4);
+            box-shadow: 10px 10px 20px #bfc4ca, -10px -10px 20px #ffffff;
             z-index: -1;
+            opacity: 0.7;
         }
         .circle-1 {
-            width: 300px; height: 300px;
-            background: rgba(114, 137, 218, 0.3);
-            top: -50px; left: -50px;
+            width: 350px; height: 350px;
+            top: -100px; left: -100px;
         }
         .circle-2 {
-            width: 400px; height: 400px;
-            background: rgba(10, 191, 255, 0.2);
-            bottom: -100px; right: -50px;
+            width: 250px; height: 250px;
+            bottom: -50px; right: -50px;
         }
 
-        /* --- Container chính (Glassmorphism) --- */
-        .profile-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px); /* Hiệu ứng mờ kính */
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px;
+        /* --- Container chính (Neumorphic Card) --- */
+        .portal-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 50px 40px;
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            box-shadow: 20px 20px 60px var(--shadow-dark), -20px -20px 60px var(--shadow-light);
+            position: relative;
+            z-index: 1;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: fadeInPortal 0.6s ease forwards;
         }
 
-        .profile-card:hover {
-            transform: translateY(-5px); /* Hiệu ứng nổi lên khi di chuột */
+        @keyframes fadeInPortal {
+            to { transform: scale(1); opacity: 1; }
         }
 
-        /* --- Avatar --- */
+        /* --- Khối Avatar & Thông tin --- */
+        .profile-section {
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .avatar-container {
             position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 25px;
+            padding: 10px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            box-shadow: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light);
         }
 
         .avatar {
@@ -89,90 +115,187 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--border-color);
+            border: 4px solid var(--card-bg);
+            box-shadow: 4px 4px 10px var(--shadow-dark);
         }
         
         .status-dot {
             position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 20px;
-            height: 20px;
+            bottom: 12px;
+            right: 12px;
+            width: 22px;
+            height: 22px;
             background-color: #23a55a; /* Màu Online */
             border-radius: 50%;
-            border: 3px solid var(--bg-color);
+            border: 4px solid var(--card-bg);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* --- Text --- */
+        .info-container {
+            margin-bottom: 15px;
+        }
+
         .name {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            color: #fff;
-            margin-bottom: 5px;
+            color: var(--text-color);
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #37474f 30%, #546e7a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .tagline {
-            font-size: 15px;
-            font-weight: 300;
-            color: #8b949e;
-            margin-bottom: 25px;
-            font-style: italic;
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-muted);
+            line-height: 1.5;
+            max-width: 80%;
+            margin: 0 auto;
         }
 
-        /* --- Social Links (Phần quan trọng) --- */
-        .social-links {
+        /* --- Khu vực liên kết (Nút Neumorphic) --- */
+        .links-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 18px;
         }
 
         .social-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 10px;
+            gap: 15px;
+            padding: 18px;
+            border-radius: var(--btn-radius);
             text-decoration: none;
             font-weight: 600;
             font-size: 16px;
-            transition: all 0.2s ease;
+            background-color: var(--card-bg);
+            color: var(--text-color);
             border: 1px solid transparent;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Style riêng cho từng nút */
-        .btn-discord {
-            background-color: var(--primary-color);
+        /* Hiệu ứng nổi lên khi hover */
+        .social-btn:hover {
+            box-shadow: 4px 4px 10px var(--shadow-dark), -4px -4px 10px var(--shadow-light);
+            transform: translateY(-2px);
             color: #fff;
         }
-        .btn-discord:hover {
-            background-color: #5b6eae;
-            transform: scale(1.02);
+
+        /* Hiệu ứng ấn xuống khi click */
+        .social-btn:active {
+            box-shadow: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light);
+            transform: translateY(1px);
         }
 
-        .btn-github {
-            background-color: #24292f;
-            color: #fff;
-            border-color: #444;
-        }
-        .btn-github:hover {
-            background-color: #333;
-            transform: scale(1.02);
-        }
+        /* Màu nhấn riêng khi hover */
+        .btn-discord:hover { background-color: var(--discord-color); }
+        .btn-bluesky:hover { background-color: var(--bluesky-color); }
+        .btn-github:hover { background-color: var(--github-color); }
 
-        .btn-bluesky {
-            background-color: #0085ff; /* Màu Bluesky */
-            color: #fff;
-        }
-        .btn-bluesky:hover {
-            background-color: #0070d6;
-            transform: scale(1.02);
-        }
-
-        /* Icon size */
+        /* Icon size và màu mặc định */
         .social-btn i {
-            font-size: 20px;
+            font-size: 22px;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .social-btn:hover i {
+            color: #fff;
+        }
+
+        /* --- Khối trang trí phụ --- */
+        .deco-block {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            z-index: 0;
+            opacity: 0.5;
+        }
+        .deco-top-right { top: 30px; right: 30px; transform: rotate(15deg); }
+        .deco-bottom-left { bottom: 30px; left: 30px; transform: rotate(-15deg); }
+
+        /* --- Footer nhỏ --- */
+        .footer {
+            margin-top: 40px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* --- Responsive cho điện thoại --- */
+        @media (max-width: 500px) {
+            body { padding: 20px; }
+            .portal-card { padding: 40px 25px; border-radius: 20px; }
+            .avatar-container { width: 120px; height: 120px; }
+            .name { font-size: 28px; }
+            .tagline { font-size: 15px; max-width: 95%; }
+            .social-btn { padding: 15px; font-size: 15px; gap: 10px; }
+            .deco-block { display: none; }
         }
 
     </style>
-</
+</head>
+<body>
+
+    <!-- Vòng tròn trang trí nền -->
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    
+    <!-- Khối trang trí phụ ngoài Card -->
+    <div class="deco-block deco-top-right"></div>
+    <div class="deco-block deco-bottom-left"></div>
+
+    <!-- Container Chính -->
+    <div class="portal-card">
+        
+        <!-- Khối Profile -->
+        <div class="profile-section">
+            <div class="avatar-container">
+                <!-- Thay link ảnh avatar của bạn vào đây (src) -->
+                <img src="https://via.placeholder.com/140" alt="Hwxnvc Avatar" class="avatar">
+                <div class="status-dot"></div>
+            </div>
+            
+            <div class="info-container">
+                <h1 class="name">Hwxnvc</h1>
+                <p class="tagline">Coder | Designer | Chuyên gia công nghệ</p>
+            </div>
+        </div>
+        
+        <!-- Khu vực Social Links -->
+        <div class="links-container">
+            <!-- Thay # bằng link thực tế của bạn -->
+            <a href="#" class="social-btn btn-discord" target="_blank">
+                <i class="fab fa-discord"></i>
+                Hwxnvc#9999
+            </a>
+            
+            <a href="#" class="social-btn btn-bluesky" target="_blank">
+                <i class="fa-solid fa-cloud"></i>
+                hwxnvc.dev
+            </a>
+
+            <a href="#" class="social-btn btn-github" target="_blank">
+                <i class="fab fa-github"></i>
+                github.com/hwxnvc
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            © 2024 Hwxnvc. All rights reserved.
+        </div>
+    </div>
+
+</body>
+</html>
