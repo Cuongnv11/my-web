@@ -43,7 +43,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #050508;
+            background: #08090d;
             filter: blur(8px) brightness(0.6);
             transform: scale(1.05);
             z-index: 0;
@@ -126,7 +126,7 @@
             text-align: center;
         }
 
-        /* AVATAR */
+        /* AVATAR PLACEHOLDER */
         .avatar-container {
             position: relative;
             width: 110px;
@@ -134,19 +134,24 @@
             margin: 0 auto 16px;
         }
 
-        .avatar-img {
+        .avatar-placeholder {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease;
             background-color: #1a1c23;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 36px;
         }
 
-        .avatar-container:hover .avatar-img {
+        .avatar-container:hover .avatar-placeholder {
             transform: scale(1.05) rotate(3deg);
+            color: #ffffff;
         }
 
         .username {
@@ -186,7 +191,7 @@
             margin-bottom: 20px;
         }
 
-        /* GALLERY HÌNH ÁNH */
+        /* GALLERY PLACEHOLDER */
         .gallery-section {
             margin-bottom: 24px;
             text-align: left;
@@ -218,21 +223,21 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background-color: #1a1c23;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 20px;
+            transition: all 0.3s ease;
         }
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
+        .gallery-item:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.15);
-        }
-
-        /* LINK SOCIALS */
+        /* LINK BUTTONS */
         .links-list {
             display: flex;
             flex-direction: column;
@@ -249,9 +254,9 @@
             padding: 12px 18px;
             border-radius: 14px;
             color: #ffffff;
-            text-decoration: none;
             font-weight: 600;
             font-size: 14px;
+            cursor: pointer;
             transition: all 0.25s ease;
         }
 
@@ -317,7 +322,9 @@
         <div class="profile-card" id="card">
             
             <div class="avatar-container">
-                <img src="" alt="Avatar" class="avatar-img">
+                <div class="avatar-placeholder">
+                    <i class="fa-solid fa-user"></i>
+                </div>
             </div>
 
             <h1 class="username">hwxnvc</h1>
@@ -338,41 +345,41 @@
                 </div>
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <img src="" alt="Photo 1">
+                        <i class="fa-regular fa-image"></i>
                     </div>
                     <div class="gallery-item">
-                        <img src="" alt="Photo 2">
+                        <i class="fa-regular fa-image"></i>
                     </div>
                     <div class="gallery-item">
-                        <img src="" alt="Photo 3">
+                        <i class="fa-regular fa-image"></i>
                     </div>
                 </div>
             </div>
 
             <div class="links-list">
-                <a href="#" class="custom-link-btn">
+                <div class="custom-link-btn">
                     <div class="link-left">
                         <i class="fa-brands fa-discord" style="color: #5865f2;"></i>
                         <span>Discord Community</span>
                     </div>
                     <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </a>
+                </div>
 
-                <a href="#" class="custom-link-btn">
+                <div class="custom-link-btn">
                     <div class="link-left">
                         <i class="fa-brands fa-instagram" style="color: #e1306c;"></i>
                         <span>Instagram Profile</span>
                     </div>
                     <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </a>
+                </div>
 
-                <a href="#" class="custom-link-btn">
+                <div class="custom-link-btn">
                     <div class="link-left">
                         <i class="fa-brands fa-github"></i>
                         <span>GitHub Projects</span>
                     </div>
                     <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
-                </a>
+                </div>
             </div>
 
         </div>
@@ -383,37 +390,13 @@
         <span id="audio-status">Audio Off</span>
     </div>
 
-    <audio id="bg-music" loop>
-        <source src="" type="audio/mpeg">
-    </audio>
-
     <script>
         const entryScreen = document.getElementById('entry-screen');
-        const bgMusic = document.getElementById('bg-music');
         const audioToggle = document.getElementById('audio-toggle');
         const audioStatus = document.getElementById('audio-status');
-        let isPlaying = false;
 
         entryScreen.addEventListener('click', () => {
             entryScreen.classList.add('fade-out');
-            bgMusic.play().then(() => {
-                isPlaying = true;
-                audioStatus.textContent = "Audio Playing";
-            }).catch(() => {
-                audioStatus.textContent = "Click to Play";
-            });
-        });
-
-        audioToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                bgMusic.pause();
-                audioStatus.textContent = "Muted";
-                isPlaying = false;
-            } else {
-                bgMusic.play();
-                audioStatus.textContent = "Audio Playing";
-                isPlaying = true;
-            }
         });
 
         const bioPhrases = ["designer & developer", "welcome to my profile", "guns.lol aesthetic layout"];
