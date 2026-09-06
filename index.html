@@ -3,299 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hwxnvc | Personal Portal</title>
-    
-    <!-- Link Font Awesome (Để lấy biểu tượng logo) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Link Google Fonts (Font Inter hiện đại, sạch sẽ) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <title>Canvas</title>
     <style>
-        /* --- CSS STYLES (Phong cách Neumorphism Sáng) --- */
-        
-        :root {
-            /* Hệ màu Neumorphism Sáng */
-            --bg-color: #e0e5ec;
-            --card-bg: #e0e5ec;
-            --text-color: #37474f;
-            --text-muted: #78909c;
-            --shadow-dark: #bfc4ca;
-            --shadow-light: #ffffff;
-            
-            /* Màu nhấn các nền tảng */
-            --discord-color: #7289da;
-            --bluesky-color: #0085ff;
-            --github-color: #24292f;
-            
-            /* Tỷ lệ và kích thước */
-            --border-radius: 30px;
-            --btn-radius: 15px;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
+        /* --- CSS RESET & CANVAS BACKGROUND --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 40px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* --- Vòng tròn trang trí nền --- */
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #f0f3f8, #c9ced4);
-            box-shadow: 10px 10px 20px #bfc4ca, -10px -10px 20px #ffffff;
-            z-index: -1;
-            opacity: 0.7;
-        }
-        .circle-1 {
-            width: 350px; height: 350px;
-            top: -100px; left: -100px;
-        }
-        .circle-2 {
-            width: 250px; height: 250px;
-            bottom: -50px; right: -50px;
-        }
-
-        /* --- Container chính (Neumorphic Card) --- */
-        .portal-card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 50px 40px;
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 20px 20px 60px var(--shadow-dark), -20px -20px 60px var(--shadow-light);
-            position: relative;
-            z-index: 1;
-            transform: scale(0.9);
-            opacity: 0;
-            animation: fadeInPortal 0.6s ease forwards;
-        }
-
-        @keyframes fadeInPortal {
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- Khối Avatar & Thông tin --- */
-        .profile-section {
-            margin-bottom: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .avatar-container {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            margin-bottom: 25px;
-            padding: 10px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            box-shadow: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light);
-        }
-
-        .avatar {
+        body, html {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--card-bg);
-            box-shadow: 4px 4px 10px var(--shadow-dark);
-        }
-        
-        .status-dot {
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            width: 22px;
-            height: 22px;
-            background-color: #23a55a; /* Màu Online */
-            border-radius: 50%;
-            border: 4px solid var(--card-bg);
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .info-container {
-            margin-bottom: 15px;
-        }
-
-        .name {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--text-color);
-            letter-spacing: -1px;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #37474f 30%, #546e7a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tagline {
-            font-size: 16px;
-            font-weight: 400;
-            color: var(--text-muted);
-            line-height: 1.5;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-
-        /* --- Khu vực liên kết (Nút Neumorphic) --- */
-        .links-container {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            padding: 18px;
-            border-radius: var(--btn-radius);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid transparent;
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-            transition: var(--transition);
-            position: relative;
             overflow: hidden;
+            background-color: #f4f1ea; /* Màu nền giấy Canvas/Nỉ ấm áp */
+            /* Tạo vân nỉ mờ nhẹ cho cảm giác như mặt tranh vẽ */
+            background-image: 
+                radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 0),
+                radial-gradient(rgba(0, 0, 0, 0.04) 1px, #f4f1ea 0);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        /* Hiệu ứng nổi lên khi hover */
-        .social-btn:hover {
-            box-shadow: 4px 4px 10px var(--shadow-dark), -4px -4px 10px var(--shadow-light);
-            transform: translateY(-2px);
-            color: #fff;
+        /* --- CANVAS CONTAINER --- */
+        #art-canvas {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
         }
 
-        /* Hiệu ứng ấn xuống khi click */
-        .social-btn:active {
-            box-shadow: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light);
-            transform: translateY(1px);
-        }
-
-        /* Màu nhấn riêng khi hover */
-        .btn-discord:hover { background-color: var(--discord-color); }
-        .btn-bluesky:hover { background-color: var(--bluesky-color); }
-        .btn-github:hover { background-color: var(--github-color); }
-
-        /* Icon size và màu mặc định */
-        .social-btn i {
-            font-size: 22px;
-            color: var(--text-muted);
-            transition: var(--transition);
-        }
-
-        .social-btn:hover i {
-            color: #fff;
-        }
-
-        /* --- Khối trang trí phụ --- */
-        .deco-block {
+        /* --- MỖI KHUNG ẢNH (ART FRAME) --- */
+        .art-item {
             position: absolute;
-            width: 60px;
-            height: 60px;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-            z-index: 0;
-            opacity: 0.5;
-        }
-        .deco-top-right { top: 30px; right: 30px; transform: rotate(15deg); }
-        .deco-bottom-left { bottom: 30px; left: 30px; transform: rotate(-15deg); }
-
-        /* --- Footer nhỏ --- */
-        .footer {
-            margin-top: 40px;
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 300;
+            padding: 12px 12px 16px 12px;
+            background: #ffffff;
+            border-radius: 4px;
+            /* Hiệu ứng bóng đổ chân thực như ảnh dán trên tường */
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.08),
+                0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                        box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            will-change: transform;
+            animation: floatGently 6s ease-in-out infinite alternate;
         }
 
-        /* --- Responsive cho điện thoại --- */
-        @media (max-width: 500px) {
-            body { padding: 20px; }
-            .portal-card { padding: 40px 25px; border-radius: 20px; }
-            .avatar-container { width: 120px; height: 120px; }
-            .name { font-size: 28px; }
-            .tagline { font-size: 15px; max-width: 95%; }
-            .social-btn { padding: 15px; font-size: 15px; gap: 10px; }
-            .deco-block { display: none; }
+        /* Hiệu ứng di chuột vào khung ảnh */
+        .art-item:hover {
+            transform: scale(1.08) rotate(0deg) !important;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.18),
+                0 6px 12px rgba(0, 0, 0, 0.1);
+            z-index: 9999 !important;
         }
 
+        /* Hình ảnh bên trong khung */
+        .art-item img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 2px;
+            pointer-events: none;
+            filter: saturate(0.9) contrast(1.05); /* Tối ưu tông màu vintage nghệ thuật */
+        }
+
+        /* Animation chuyển động bồng bềnh nhẹ nhàng */
+        @keyframes floatGently {
+            0% {
+                margin-top: 0px;
+            }
+            100% {
+                margin-top: -10px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Vòng tròn trang trí nền -->
-    <div class="circle circle-1"></div>
-    <div class="circle circle-2"></div>
-    
-    <!-- Khối trang trí phụ ngoài Card -->
-    <div class="deco-block deco-top-right"></div>
-    <div class="deco-block deco-bottom-left"></div>
+    <!-- Container cho các bức ảnh -->
+    <div id="art-canvas"></div>
 
-    <!-- Container Chính -->
-    <div class="portal-card">
+    <script>
+        // --- JAVASCRIPT TẠO ẢNH NGẪU NHIÊN ---
+        const canvas = document.getElementById('art-canvas');
         
-        <!-- Khối Profile -->
-        <div class="profile-section">
-            <div class="avatar-container">
-                <!-- Thay link ảnh avatar của bạn vào đây (src) -->
-                <img src="https://via.placeholder.com/140" alt="Hwxnvc Avatar" class="avatar">
-                <div class="status-dot"></div>
-            </div>
-            
-            <div class="info-container">
-                <h1 class="name">Hwxnvc</h1>
-                <p class="tagline">Coder | Designer | Chuyên gia công nghệ</p>
-            </div>
-        </div>
-        
-        <!-- Khu vực Social Links -->
-        <div class="links-container">
-            <!-- Thay # bằng link thực tế của bạn -->
-            <a href="#" class="social-btn btn-discord" target="_blank">
-                <i class="fab fa-discord"></i>
-                Hwxnvc#9999
-            </a>
-            
-            <a href="#" class="social-btn btn-bluesky" target="_blank">
-                <i class="fa-solid fa-cloud"></i>
-                hwxnvc.dev
-            </a>
+        // Số lượng bức ảnh trang trí hiển thị trên Canvas
+        const totalImages = 12; 
 
-            <a href="#" class="social-btn btn-github" target="_blank">
-                <i class="fab fa-github"></i>
-                github.com/hwxnvc
-            </a>
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            © 2024 Hwxnvc. All rights reserved.
-        </div>
-    </div>
+        // Danh sách các seed ảnh nghệ thuật trừu tượng/kiến trúc/thiên nhiên
+        const imageSeeds = [
+            1025, 1062, 1069, 1080, 1084, 
+            1015, 1021, 1035, 1040, 1050, 
+            1060, 1074, 1082, 1005, 1011
+        ];
 
+        let maxZIndex = 10;
+
+        function renderCanvas() {
+            canvas.innerHTML = ''; // Làm sạch canvas
+
+            for (let i = 0; i < totalImages; i++) {
+                const item = document.createElement('div');
+                item.classList.add('art-item');
+
+                // Kích thước ngẫu nhiên cho từng ảnh (từ 180px đến 280px)
+                const width = Math.floor(Math.random() * 100) + 180;
+                const height = Math.floor(width * (Math.random() * 0.4 + 1.1)); // Tỷ lệ dọc tùy chỉnh
+
+                // Vị trí ngẫu nhiên trong màn hình (tránh tràn viền quá nhiều)
+                const posX = Math.random() * (window.innerWidth - width - 60) + 30;
+                const posY = Math.random() * (window.innerHeight - height - 60) + 30;
+
+                // Góc nghiêng ngẫu nhiên (-25 độ đến +25 độ)
+                const rotation = (Math.random() * 50 - 25).toFixed(1);
+
+                // Thời gian animation bồng bềnh ngẫu nhiên
+                const floatDuration = (Math.random() * 3 + 4).toFixed(1);
+                const floatDelay = (Math.random() * 2).toFixed(1);
+
+                // Thiết lập Style cho phần tử
+                item.style.width = `${width}px`;
+                item.style.height = `${height}px`;
+                item.style.left = `${posX}px`;
+                item.style.top = `${posY}px`;
+                item.style.transform = `rotate(${rotation}deg)`;
+                item.style.zIndex = Math.floor(Math.random() * 20);
+                item.style.animationDuration = `${floatDuration}s`;
+                item.style.animationDelay = `${floatDelay}s`;
+
+                // Tạo thẻ <img> lấy ảnh nghệ thuật ngẫu nhiên
+                const img = document.createElement('img');
+                const seed = imageSeeds[i % imageSeeds.length];
+                img.src = `https://picsum.photos/id/${seed}/${width}/${height}`;
+                img.alt = 'Art Canvas Item';
+
+                item.appendChild(img);
+
+                // Sự kiện khi nhấp chuột vào ảnh: Nổi lên trên cùng
+                item.addEventListener('click', () => {
+                    maxZIndex++;
+                    item.style.zIndex = maxZIndex;
+                });
+
+                canvas.appendChild(item);
+            }
+        }
+
+        // Khởi chạy khi tải trang
+        window.addEventListener('DOMContentLoaded', renderCanvas);
+
+        // Tự động sắp xếp lại khi thay đổi kích thước cửa sổ
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(renderCanvas, 300);
+        });
+    </script>
 </body>
 </html>
