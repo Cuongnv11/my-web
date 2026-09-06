@@ -3,170 +3,556 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Canvas</title>
+    <title>hwxnvc | zyo.lol bio</title>
+    
+    <!-- FontAwesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
     <style>
-        /* --- RESET & NỀN CANVAS --- */
+        /* --- STYLES PHONG CÁCH ZYO.LOL --- */
+        :root {
+            --accent-color: #5865f2;     /* Màu xanh Discord */
+            --accent-glow: rgba(88, 101, 242, 0.5);
+            --bg-dark: #090a0f;
+            --card-bg: rgba(18, 20, 29, 0.65);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-sub: #949ba4;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            user-select: none;
         }
 
         body, html {
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
-            background-color: #f4f1ea; /* Tone màu giấy vẽ vintage */
-            background-image: 
-                radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 0),
-                radial-gradient(rgba(0, 0, 0, 0.04) 1px, #f4f1ea 0);
-            background-size: 20px 20px;
-            user-select: none;
-            -webkit-user-select: none;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            cursor: default;
         }
 
-        #art-canvas {
-            position: relative;
+        /* --- MÀN HÌNH CHỜ (ENTRY SCREEN) --- */
+        #entry-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100vw;
             height: 100vh;
-        }
-
-        /* --- MỖI KHUNG ẢNH xuất hiện --- */
-        .art-item {
-            position: absolute;
-            padding: 10px 10px 14px 10px;
-            background: #ffffff;
-            border-radius: 4px;
-            box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.08),
-                0 2px 6px rgba(0, 0, 0, 0.05);
-            /* Chuyển động mượt mà khi xuất hiện và biến mất */
-            opacity: 0;
-            transform: scale(0.4);
-            transition: 
-                opacity 0.8s ease, 
-                transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                box-shadow 0.4s ease;
+            background: rgba(9, 10, 15, 0.92);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
             cursor: pointer;
         }
 
-        /* Trạng thái ảnh đã xuất hiện hoàn toàn */
-        .art-item.visible {
-            opacity: 1;
+        #entry-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
         }
 
-        /* Trạng thái ảnh mờ dần và biến mất */
-        .art-item.fade-out {
-            opacity: 0 !important;
-            transform: scale(0.6) !important;
+        .entry-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 15px var(--accent-glow);
+            animation: pulseText 2s infinite alternate;
         }
 
-        /* Hiệu ứng khi di chuột vào ảnh */
-        .art-item:hover {
-            transform: scale(1.1) rotate(0deg) !important;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.18),
-                0 6px 12px rgba(0, 0, 0, 0.1);
-            z-index: 99999 !important;
+        .entry-sub {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-top: 10px;
+            letter-spacing: 1px;
         }
 
-        .art-item img {
-            display: block;
+        @keyframes pulseText {
+            0% { transform: scale(0.98); opacity: 0.7; }
+            100% { transform: scale(1.02); opacity: 1; text-shadow: 0 0 25px var(--accent-color); }
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 2px;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(88, 101, 242, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 40%);
+            z-index: 1;
             pointer-events: none;
-            filter: saturate(0.9) contrast(1.05);
+        }
+
+        /* --- CONTAINER MÀN HÌNH CHÍNH --- */
+        .wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            perspective: 1000px; /* Phục vụ hiệu ứng 3D Tilt */
+            padding: 20px;
+        }
+
+        /* --- PROFILE CARD (Thẻ chính Glassmorphism) --- */
+        .profile-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 28px 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 1px rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        /* --- BANNER & AVATAR --- */
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .avatar-box {
+            position: relative;
+            width: 105px;
+            height: 105px;
+            margin-bottom: 16px;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Trạng thái Online Discord */
+        .discord-status {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 22px;
+            height: 22px;
+            background-color: #23a55a; /* Online Green */
+            border-radius: 50%;
+            border: 4px solid #12141d;
+            box-shadow: 0 0 10px #23a55a;
+        }
+
+        /* --- HUY HIỆU (BADGES) --- */
+        .badges-row {
+            display: flex;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+
+        .badge-icon {
+            font-size: 15px;
+            color: #b5bac1;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .badge-icon:hover {
+            color: #fff;
+            transform: scale(1.2);
+        }
+
+        /* --- USERNAME & TYPEWRITER BIO --- */
+        .username {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            text-shadow: 0 0 12px var(--accent-glow);
+            margin-bottom: 6px;
+        }
+
+        .bio-typewriter {
+            font-size: 14px;
+            color: var(--text-sub);
+            min-height: 20px;
+            font-weight: 400;
+            margin-bottom: 22px;
+        }
+
+        /* --- DISCORD ACTIVITY WIDGET --- */
+        .discord-activity {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            text-align: left;
+        }
+
+        .activity-icon {
+            font-size: 24px;
+            color: var(--accent-color);
+        }
+
+        .activity-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .activity-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 0.5px;
+        }
+
+        .activity-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .activity-state {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        /* --- NÚT CHÍNH DISCORD JOIN --- */
+        .main-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+            color: #fff;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 8px 20px var(--accent-glow);
+            transition: all 0.3s ease;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .main-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px var(--accent-glow);
+            filter: brightness(1.1);
+        }
+
+        /* --- SOCIAL ICONS ROW --- */
+        .socials-grid {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-sub);
+            font-size: 18px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .social-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- AUDIO WIDGET GÓC DƯỚI --- */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(18, 20, 29, 0.8);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-sub);
+            z-index: 99;
+            cursor: pointer;
+        }
+
+        .audio-control i {
+            color: var(--accent-color);
+        }
+
+        /* --- NHẠC NỀN & SPARKLE CANVAS --- */
+        #sparkle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Responsive di động */
+        @media (max-width: 480px) {
+            .profile-card { padding: 22px 18px; }
+            .username { font-size: 22px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="art-canvas"></div>
+    <!-- Màn hình chờ (Entry Screen) -->
+    <div id="entry-screen">
+        <div class="entry-title">[ Click Anywhere ]</div>
+        <div class="entry-sub">zyo.lol / hwxnvc</div>
+    </div>
+
+    <!-- Canvas tạo hạt lấp lánh theo con trỏ chuột -->
+    <canvas id="sparkle-canvas"></canvas>
+
+    <!-- Nền chuyển động -->
+    <div class="bg-overlay"></div>
+
+    <!-- Khung hiển thị Bio Card -->
+    <div class="wrapper">
+        <div class="profile-card" id="card">
+            <div class="card-header">
+                
+                <!-- Avatar & Trạng thái -->
+                <div class="avatar-box">
+                    <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar" class="avatar-img" id="user-avatar">
+                    <div class="discord-status" title="Online"></div>
+                </div>
+
+                <!-- Huy hiệu (Badges) -->
+                <div class="badges-row">
+                    <i class="fa-solid fa-bolt badge-icon" title="Discord Nitro"></i>
+                    <i class="fa-solid fa-shield-halved badge-icon" title="HypeSquad Bravery"></i>
+                    <i class="fa-solid fa-code badge-icon" title="Developer"></i>
+                    <i class="fa-solid fa-gem badge-icon" title="Early Booster"></i>
+                </div>
+
+                <!-- Username & Bio chữ chạy -->
+                <h1 class="username">hwxnvc</h1>
+                <div class="bio-typewriter" id="typewriter"></div>
+            </div>
+
+            <!-- Discord Activity Status -->
+            <div class="discord-activity">
+                <i class="fa-brands fa-discord activity-icon"></i>
+                <div class="activity-details">
+                    <span class="activity-title">Playing Discord</span>
+                    <span class="activity-name">Chilling on Server</span>
+                    <span class="activity-state">Connected • 24/7</span>
+                </div>
+            </div>
+
+            <!-- Nút chính Liên kết Discord -->
+            <!-- LƯU Ý: Thay link Discord Server/User của bạn vào href -->
+            <a href="https://discord.gg/your-invite-code" target="_blank" class="main-btn">
+                <i class="fa-brands fa-discord"></i>
+                <span>Join Discord Server</span>
+            </a>
+
+            <!-- Các biểu tượng mạng xã hội khác -->
+            <div class="socials-grid">
+                <a href="https://hwxnvc.dev" target="_blank" class="social-link" title="Website">
+                    <i class="fa-solid fa-globe"></i>
+                </a>
+                <a href="https://bsky.app/profile/hwxnvc.bsky.social" target="_blank" class="social-link" title="Bluesky">
+                    <i class="fa-solid fa-cloud"></i>
+                </a>
+                <a href="https://github.com/hwxnvc" target="_blank" class="social-link" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://spotify.com" target="_blank" class="social-link" title="Spotify">
+                    <i class="fa-brands fa-spotify"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nút điều khiển Âm thanh góc dưới -->
+    <div class="audio-control" id="audio-toggle">
+        <i class="fa-solid fa-music"></i>
+        <span id="audio-status">Background Audio</span>
+    </div>
+
+    <!-- Thẻ Audio phát nhạc ẩn (Thay link bài hát MP3 của bạn vào src) -->
+    <audio id="bg-music" loop>
+        <source src="https://files.catbox.moe/7b7r1y.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        const canvas = document.getElementById('art-canvas');
-        
-        // --- CẤU HÌNH THỜI GIAN & SỐ LƯỢNG ---
-        const MAX_IMAGES = 14;        // Số lượng ảnh tối đa xuất hiện trên màn hình cùng lúc
-        const SPAWN_INTERVAL = 2000;  // Thời gian tạo ảnh mới (2000ms = 2 giây)
-        
-        let zIndexCounter = 10;
+        // --- 1. XỬ LÝ MÀN HÌNH CHỜ & PHÁT NHẠC ---
+        const entryScreen = document.getElementById('entry-screen');
+        const bgMusic = document.getElementById('bg-music');
+        const audioToggle = document.getElementById('audio-toggle');
+        const audioStatus = document.getElementById('audio-status');
+        let isPlaying = false;
 
-        // Kho seed ảnh nghệ thuật
-        const imageSeeds = [
-            1025, 1062, 1069, 1080, 1084, 1015, 1021, 1035, 1040, 1050, 
-            1060, 1074, 1082, 1005, 1011, 1027, 1039, 1043, 1052, 1056, 
-            1068, 1076, 1081, 1083, 1024, 1018, 1012, 1002, 1004, 1006
-        ];
-
-        function createRandomImage() {
-            const item = document.createElement('div');
-            item.classList.add('art-item');
-
-            // Kích thước ngẫu nhiên (180px -> 260px)
-            const width = Math.floor(Math.random() * 80) + 180;
-            const height = Math.floor(width * (Math.random() * 0.4 + 1.1));
-
-            // Tọa độ ngẫu nhiên trên màn hình
-            const posX = Math.random() * (window.innerWidth - width - 60) + 30;
-            const posY = Math.random() * (window.innerHeight - height - 60) + 30;
-            const rotation = (Math.random() * 40 - 20).toFixed(1); // Góc xoay -20 đến +20 độ
-
-            item.style.width = `${width}px`;
-            item.style.height = `${height}px`;
-            item.style.left = `${posX}px`;
-            item.style.top = `${posY}px`;
-            item.style.zIndex = ++zIndexCounter;
-
-            // Chọn ảnh ngẫu nhiên từ kho seed
-            const randomSeed = imageSeeds[Math.floor(Math.random() * imageSeeds.length)];
-            const img = document.createElement('img');
-            img.src = `https://picsum.photos/id/${randomSeed}/${width}/${height}`;
-            img.alt = 'Canvas Art';
-
-            item.appendChild(img);
-
-            // Bấm vào ảnh để đưa lên trên cùng
-            item.addEventListener('click', () => {
-                zIndexCounter++;
-                item.style.zIndex = zIndexCounter;
+        entryScreen.addEventListener('click', () => {
+            entryScreen.classList.add('fade-out');
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                audioStatus.textContent = "Playing...";
+            }).catch(() => {
+                audioStatus.textContent = "Click to Play";
             });
+        });
 
-            canvas.appendChild(item);
+        audioToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                audioStatus.textContent = "Muted";
+                isPlaying = false;
+            } else {
+                bgMusic.play();
+                audioStatus.textContent = "Playing...";
+                isPlaying = true;
+            }
+        });
 
-            // Kích hoạt animation xuất hiện (fade-in + phóng to)
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    item.classList.add('visible');
-                    item.style.transform = `scale(1) rotate(${rotation}deg)`;
-                });
-            });
+        // --- 2. HIỆU ỨNG TYPEWRITER (Chữ gõ tự động) ---
+        const textArray = ["Welcome to my profile", "Discord Enthusiast", "hwxnvc.dev owner", "Connecting community..."];
+        let textIndex = 0;
+        let charIndex = 0;
+        const typewriterElement = document.getElementById("typewriter");
 
-            // Tự động dọn dẹp ảnh cũ khi vượt quá MAX_IMAGES
-            const currentItems = canvas.querySelectorAll('.art-item:not(.fade-out)');
-            if (currentItems.length > MAX_IMAGES) {
-                const oldestItem = currentItems[0];
-                oldestItem.classList.remove('visible');
-                oldestItem.classList.add('fade-out');
-
-                // Xóa hẳn phần tử ra khỏi DOM sau khi hoàn tất hiệu ứng mờ
-                setTimeout(() => {
-                    if (oldestItem.parentNode) {
-                        oldestItem.parentNode.removeChild(oldestItem);
-                    }
-                }, 800);
+        function typeEffect() {
+            if (charIndex < textArray[textIndex].length) {
+                typewriterElement.textContent += textArray[textIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeEffect, 90);
+            } else {
+                setTimeout(eraseEffect, 1800);
             }
         }
 
-        // Tạo sẵn 4 bức ảnh đầu tiên khi tải trang
-        for (let i = 0; i < 4; i++) {
-            setTimeout(createRandomImage, i * 400);
+        function eraseEffect() {
+            if (charIndex > 0) {
+                typewriterElement.textContent = textArray[textIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(eraseEffect, 50);
+            } else {
+                textIndex = (textIndex + 1) % textArray.length;
+                setTimeout(typeEffect, 400);
+            }
         }
 
-        // VÒNG LẶP LIÊN TỤC: Tạo 1 ảnh mới mỗi vài giây
-        setInterval(createRandomImage, SPAWN_INTERVAL);
+        document.addEventListener("DOMContentLoaded", () => setTimeout(typeEffect, 1000));
+
+        // --- 3. HIỆU ỨNG THẺ Nghiêng 3D (3D Tilt Card) ---
+        const card = document.getElementById('card');
+
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth < 768) return; // Bỏ qua trên di động
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        // Reset lại góc khi di chuột ra ngoài
+        document.addEventListener('mouseleave', () => {
+            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+
+        // --- 4. HIỆU ỨNG HẠT LẤP LÁNH THEO CON TRỎ CHUỘT (Sparkles) ---
+        const canvas = document.getElementById('sparkle-canvas');
+        const ctx = canvas.getContext('2d');
+        let sparkles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        document.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 2; i++) {
+                sparkles.push({
+                    x: e.clientX,
+                    y: e.clientY,
+                    size: Math.random() * 3 + 1,
+                    alpha: 1,
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5 + 0.5
+                });
+            }
+        });
+
+        function animateSparkles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < sparkles.length; i++) {
+                let s = sparkles[i];
+                s.x += s.vx;
+                s.y += s.vy;
+                s.alpha -= 0.02;
+
+                ctx.fillStyle = `rgba(180, 190, 255, ${s.alpha})`;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (s.alpha <= 0) {
+                    sparkles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateSparkles);
+        }
+        animateSparkles();
     </script>
 </body>
 </html>
