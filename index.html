@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orqen — Next-Gen AI Agent Infrastructure</title>
+    <title>Aether AI — Hạ Tầng Trí Tuệ Nhân Tạo Thế Hệ Mới</title>
     
-    <!-- Fonts & Icons -->
+    <!-- Phông chữ & Biểu tượng -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-            --bg-main: #07080e;
-            --bg-card: rgba(18, 20, 32, 0.65);
-            --bg-card-hover: rgba(28, 31, 50, 0.75);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(99, 102, 241, 0.3);
+            --bg-main: #060810;
+            --bg-card: rgba(15, 18, 30, 0.72);
+            --bg-card-hover: rgba(25, 30, 50, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-highlight: rgba(99, 102, 241, 0.4);
             
             --primary: #6366f1;
             --primary-glow: rgba(99, 102, 241, 0.4);
@@ -42,15 +42,28 @@
             line-height: 1.6;
         }
 
-        /* BACKGROUND GLOW EFFECTS */
-        .glow-bg {
+        /* HÌNH NỀN CÔNG NGHỆ & LỚP PHỦ */
+        .bg-image {
             position: fixed;
             top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            filter: brightness(0.25) contrast(1.1) blur(2px);
+            z-index: 0;
+            pointer-events: none;
+            transform: scale(1.02);
+        }
+
+        .glow-bg {
+            position: fixed;
+            top: -100px;
             left: 50%;
             transform: translateX(-50%);
-            width: 1000px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.08) 40%, rgba(7, 8, 14, 0) 70%);
+            width: 1100px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(6, 182, 212, 0.12) 40%, rgba(6, 8, 16, 0) 70%);
             z-index: 0;
             pointer-events: none;
         }
@@ -62,14 +75,14 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
             z-index: 0;
             pointer-events: none;
         }
 
-        /* CONTAINER */
+        /* KHUNG CHÍNH */
         .container {
             max-width: 1240px;
             margin: 0 auto;
@@ -78,34 +91,35 @@
             z-index: 1;
         }
 
-        /* NAVBAR */
+        /* THANH ĐIỀU HƯỚNG */
         nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 24px 0;
             border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 800;
             font-size: 22px;
             letter-spacing: -0.5px;
         }
 
         .logo-icon {
-            width: 34px;
-            height: 34px;
+            width: 38px;
+            height: 38px;
             background: linear-gradient(135deg, var(--primary), var(--cyan));
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            box-shadow: 0 0 15px var(--primary-glow);
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
         .nav-links {
@@ -132,8 +146,8 @@
         }
 
         .btn {
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 10px 22px;
+            border-radius: 12px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -146,13 +160,14 @@
 
         .btn-ghost {
             color: var(--text-main);
-            background: transparent;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
         }
 
         .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
         .btn-primary {
@@ -167,7 +182,7 @@
             box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
         }
 
-        /* HERO SECTION */
+        /* PHẦN TRANG CHỦ (HERO) */
         .hero {
             text-align: center;
             padding: 80px 0 60px;
@@ -177,28 +192,29 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 30px;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.25);
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             color: #a5b4fc;
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 24px;
+            backdrop-filter: blur(8px);
         }
 
         .badge-pill i {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--cyan);
         }
 
         .hero h1 {
-            font-size: 56px;
+            font-size: 54px;
             font-weight: 800;
             line-height: 1.15;
             letter-spacing: -1.5px;
             margin-bottom: 20px;
-            background: linear-gradient(180deg, #ffffff 0%, #a0aec0 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -212,7 +228,7 @@
         .hero p {
             font-size: 18px;
             color: var(--text-muted);
-            max-width: 680px;
+            max-width: 720px;
             margin: 0 auto 36px;
         }
 
@@ -223,14 +239,15 @@
             margin-bottom: 60px;
         }
 
-        /* DASHBOARD PREVIEW */
+        /* BẢNG ĐIỀU KHIỂN MÔ PHỎNG */
         .dashboard-preview {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
             position: relative;
             overflow: hidden;
         }
@@ -239,9 +256,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 16px;
+            padding-bottom: 18px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .window-dots {
@@ -263,12 +280,12 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--emerald);
             background: rgba(16, 185, 129, 0.1);
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.25);
         }
 
         .status-pulse {
@@ -281,64 +298,64 @@
         }
 
         @keyframes pulse {
-            0% { opacity: 0.4; }
+            0% { opacity: 0.3; }
             50% { opacity: 1; }
-            100% { opacity: 0.4; }
+            100% { opacity: 0.3; }
         }
 
         .arch-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            gap: 18px;
         }
 
         .arch-card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 22px;
             text-align: left;
             transition: all 0.3s ease;
         }
 
         .arch-card:hover {
             border-color: var(--border-highlight);
-            background: rgba(99, 102, 241, 0.05);
+            background: rgba(99, 102, 241, 0.08);
             transform: translateY(-4px);
         }
 
         .arch-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             background: rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
             color: var(--cyan);
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .arch-card h4 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
         .arch-card p {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
         }
 
-        /* BENTO GRID SECTION */
+        /* LƯỚI BENTO */
         .section-title {
             text-align: center;
             margin: 100px 0 50px;
         }
 
         .section-title h2 {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 800;
             letter-spacing: -1px;
             margin-bottom: 12px;
@@ -359,17 +376,18 @@
         .bento-item {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 28px;
+            border-radius: 24px;
+            padding: 32px;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             transition: all 0.3s ease;
         }
 
         .bento-item:hover {
             border-color: var(--border-highlight);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
         .bento-wide {
@@ -388,7 +406,7 @@
         .bento-item h3 {
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .bento-item p {
@@ -398,12 +416,12 @@
             margin-bottom: 20px;
         }
 
-        /* CODE BLOCK PREVIEW */
+        /* KHUNG MÃ NGUỒN */
         .code-box {
-            background: #0d0f18;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 16px;
+            background: #090b14;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 18px;
             font-family: 'Fira Code', monospace;
             font-size: 13px;
             color: #a7f3d0;
@@ -416,16 +434,17 @@
         .code-string { color: #fde047; }
         .code-comment { color: #6b7280; }
 
-        /* FOOTER */
+        /* CHÂN TRANG */
         footer {
             border-top: 1px solid var(--border-color);
             padding: 40px 0;
             text-align: center;
             color: var(--text-dim);
             font-size: 14px;
+            backdrop-filter: blur(10px);
         }
 
-        /* RESPONSIVE */
+        /* MÀN HÌNH NHỎ */
         @media (max-width: 1024px) {
             .arch-grid { grid-template-columns: repeat(2, 1fr); }
             .bento-grid { grid-template-columns: 1fr; }
@@ -433,7 +452,7 @@
         }
 
         @media (max-width: 640px) {
-            .hero h1 { font-size: 38px; }
+            .hero h1 { font-size: 36px; }
             .nav-links { display: none; }
             .arch-grid { grid-template-columns: 1fr; }
         }
@@ -441,45 +460,47 @@
 </head>
 <body>
 
+    <!-- LỚP NỀN HÌNH ÁNH & HIỆU ỨNG -->
+    <div class="bg-image"></div>
     <div class="glow-bg"></div>
     <div class="grid-pattern"></div>
 
     <div class="container">
-        <!-- NAVBAR -->
+        <!-- THANH ĐIỀU HƯỚNG -->
         <nav>
             <div class="logo">
                 <div class="logo-icon">
-                    <i class="fa-solid fa-layer-group"></i>
+                    <i class="fa-solid fa-brain"></i>
                 </div>
-                Orqen
+                Aether AI
             </div>
             <ul class="nav-links">
-                <li><a href="#">Products</a></li>
-                <li><a href="#">Infrastructure</a></li>
-                <li><a href="#">Solutions</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">Docs</a></li>
+                <li><a href="#">Sản Phẩm</a></li>
+                <li><a href="#">Hạ Tầng</a></li>
+                <li><a href="#">Giải Pháp</a></li>
+                <li><a href="#">Bảng Giá</a></li>
+                <li><a href="#">Tài Liệu API</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="#" class="btn btn-ghost">Sign In</a>
-                <a href="#" class="btn btn-primary"><i class="fa-solid fa-terminal"></i> Launch Console</a>
+                <a href="#" class="btn btn-ghost">Đăng Nhập</a>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-terminal"></i> Bảng Điều Khiển</a>
             </div>
         </nav>
 
-        <!-- HERO SECTION -->
+        <!-- PHẦN TRANG CHỦ -->
         <section class="hero">
             <div class="badge-pill">
-                <i class="fa-solid fa-sparkles"></i> Orqen v2.0 — Production-Grade AI Infrastructure
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Aether AI v2.5 — Hạ Tầng AI Tự Hành Doanh Nghiệp
             </div>
-            <h1>Build, Deploy & Scale <span>AI Agent Workflows</span></h1>
-            <p>Unified runtime orchestration, context memory, isolated execution sandboxes, and full-stack observability for autonomous AI agents.</p>
+            <h1>Xây Dựng & Triển Khai <span>Luồng Công Việc AI Tự Hành</span></h1>
+            <p>Nền tảng hạ tầng hợp nhất giúp điều phối mô hình, quản lý bộ nhớ ngữ cảnh, môi trường thực thi an toàn và giám sát toàn diện cho các Agent AI tự động.</p>
             
             <div class="hero-buttons">
-                <a href="#" class="btn btn-primary"><i class="fa-solid fa-bolt"></i> Start Building Free</a>
-                <a href="#" class="btn btn-ghost"><i class="fa-solid fa-book-open"></i> Explore Architecture</a>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Bắt Đầu Miễn Phí</a>
+                <a href="#" class="btn btn-ghost"><i class="fa-solid fa-diagram-project"></i> Khám Phá Kiến Trúc</a>
             </div>
 
-            <!-- DASHBOARD PREVIEW -->
+            <!-- BẢNG ĐIỀU KHIỂN MÔ PHỎNG -->
             <div class="dashboard-preview">
                 <div class="dashboard-header">
                     <div class="window-dots">
@@ -488,86 +509,86 @@
                         <div class="dot dot-green"></div>
                     </div>
                     <div class="dash-status">
-                        <div class="status-pulse"></div> Cluster Status: Active (99.99% Uptime)
+                        <div class="status-pulse"></div> Trạng Thái Máy Chủ: Hoạt Động (Sẵn Sàng 99.99%)
                     </div>
                 </div>
 
                 <div class="arch-grid">
                     <div class="arch-card">
                         <div class="arch-icon"><i class="fa-solid fa-microchip"></i></div>
-                        <h4>Model Layer</h4>
-                        <p>LLM routing, failover protection & dynamic context windows.</p>
+                        <h4>Tầng Mô Hình AI</h4>
+                        <p>Tự động điều hướng LLM, chuyển vùng dự phòng & tối ưu cửa sổ ngữ cảnh.</p>
                     </div>
 
                     <div class="arch-card">
                         <div class="arch-icon"><i class="fa-solid fa-database"></i></div>
-                        <h4>Context & Memory</h4>
-                        <p>Real-time vector indexing, RAG pipelines & persistent sessions.</p>
+                        <h4>Bộ Nhớ Ngữ Cảnh</h4>
+                        <p>Lập chỉ mục Vector thời gian thực, đường ống RAG & lưu trữ phiên làm việc.</p>
                     </div>
 
                     <div class="arch-card">
                         <div class="arch-icon"><i class="fa-solid fa-cubes"></i></div>
-                        <h4>Runtime Harness</h4>
-                        <p>Durable execution loops, tool calling & sandbox security.</p>
+                        <h4>Điều Phối Thực Thi</h4>
+                        <p>Tự động hóa chu trình, gọi công cụ API & cách ly môi trường Sandbox.</p>
                     </div>
 
                     <div class="arch-card">
                         <div class="arch-icon"><i class="fa-solid fa-chart-line"></i></div>
-                        <h4>Observability</h4>
-                        <p>Step-by-step trace logs, latency metrics & token cost control.</p>
+                        <h4>Giám Sát & Truy Vết</h4>
+                        <p>Nhật ký truy vết chi tiết, đo lường độ trễ & kiểm soát chi phí Token.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- BENTO GRID SECTION -->
+        <!-- LƯỚI BENTO NỔI BẬT -->
         <div class="section-title">
-            <h2>Complete Lifecycle Platform</h2>
-            <p>Everything you need to ship reliable AI agents from prototype to production scale.</p>
+            <h2>Nền Tảng Tự Động Hóa Mọi Công Đoạn</h2>
+            <p>Cung cấp đầy đủ công cụ để bạn đưa các Agent AI từ ý tưởng thử nghiệm ra quy mô sản xuất thực tế.</p>
         </div>
 
         <div class="bento-grid">
             <div class="bento-item bento-wide">
-                <div class="bento-tag">Runtime & Harness</div>
-                <h3>Durable Agent Loop Execution</h3>
-                <p>Ensure your agents recover cleanly from API failures, manage complex tool calling trees, and run multi-step planning loops safely inside isolated execution sandboxes.</p>
+                <div class="bento-tag">Thực Thi & Tự Động Hóa</div>
+                <h3>Chu Trình Agent Bền Vững & An Toàn</h3>
+                <p>Đảm bảo các Agent tự khắc phục lỗi khi mất kết nối API, xử lý cây quyết định phức tạp và chạy trong môi trường Sandbox cách ly hoàn toàn.</p>
                 <div class="code-box">
-<span class="code-comment">// Initialize Orqen Agent Infrastructure</span>
-<span class="code-keyword">import</span> { AgentRuntime } <span class="code-keyword">from</span> <span class="code-string">'@orqen/sdk'</span>;
+<span class="code-comment">// Khởi tạo hạ tầng Agent AI bằng tiếng Việt</span>
+<span class="code-keyword">import</span> { HaTangAI } <span class="code-keyword">from</span> <span class="code-string">'@aether/core'</span>;
 
-<span class="code-keyword">const</span> agent = <span class="code-keyword">new</span> <span class="code-func">AgentRuntime</span>({
-  id: <span class="code-string">'dev-agent-v1'</span>,
-  memory: <span class="code-string">'vector-long-term'</span>,
-  tools: [<span class="code-string">'github'</span>, <span class="code-string">'postgres'</span>, <span class="code-string">'web-search'</span>],
-  guardrails: { maxTokenLimit: <span class="code-string">4000</span> }
+<span class="code-keyword">const</span> agent = <span class="code-keyword">new</span> <span class="code-func">HaTangAI</span>({
+  id: <span class="code-string">'agent-phan-tich-du-lieu'</span>,
+  boNho: <span class="code-string">'vector-dai-han'</span>,
+  congCu: [<span class="code-string">'truy-van-csdl'</span>, <span class="code-string">'tim-kiem-web'</span>, <span class="code-string">'xuat-bao-cao'</span>],
+  gioiHanToken: <span class="code-string">8000</span>
 });
 
-<span class="code-keyword">await</span> agent.<span class="code-func">run</span>({ task: <span class="code-string">'Analyze & optimize DB queries'</span> });
+<span class="code-keyword">await</span> agent.<span class="code-func">thucThi</span>({ nhiemVu: <span class="code-string">'Tối ưu hóa truy vấn CSDL doanh nghiệp'</span> });
                 </div>
             </div>
 
             <div class="bento-item">
-                <div class="bento-tag">Security & Identity</div>
-                <h3>OAuth & Token Management</h3>
-                <p>Manage user authorizations, API keys, and scoped credentials seamlessly across hundreds of third-party integrations.</p>
+                <div class="bento-tag">Bảo Mật & Định Danh</div>
+                <h3>Quản Lý Quyền & Mã Xác Thực</h3>
+                <p>An tâm kết nối dữ liệu với cơ chế mã hóa token OAuth, phân quyền theo vai trò và bảo vệ dữ liệu nhạy cảm.</p>
             </div>
 
             <div class="bento-item">
-                <div class="bento-tag">Governance</div>
-                <h3>Cost Guardrails & Limits</h3>
-                <p>Prevent runaway loops with strict step-count limits, per-run cost caps, and automatic circuit breakers.</p>
+                <div class="bento-tag">Quản Trị Hệ Thống</div>
+                <h3>Giới Hạn Chi Phí & An Toàn</h3>
+                <p>Ngăn chặn lặp vô tận bằng cách thiết lập giới hạn bước chạy, trần chi phí theo từng tác vụ và cầu chì tự ngắt.</p>
             </div>
 
             <div class="bento-item bento-wide">
-                <div class="bento-tag">Telemetry & Logs</div>
-                <h3>Real-Time Trace Observability</h3>
-                <p>Inspect every single model decision, tool call, input parameter, and latency bottleneck in real-time streaming trace logs.</p>
+                <div class="bento-tag">Đo Lường Thời Gian Thực</div>
+                <h3>Nhật Ký Truy Vết Trực Tiếp</h3>
+                <p>Theo dõi từng quyết định của mô hình, tham số đầu vào, lệnh gọi công cụ và phát hiện điểm nghẽn độ trễ tức thì.</p>
             </div>
         </div>
 
-        <!-- FOOTER -->
+        <!-- CHÂN TRANG -->
         <footer>
-            <p>&copy; 2026 Orqen AI Inc. Designed for Autonomous Agent Infrastructure.</p>
+            <p>&copy; 2026 Aether AI Inc. Hạ Tầng Trí Tuệ Nhân Tạo Doanh Nghiệp Việt Nam.</p>
         </footer>
     </div>
 
